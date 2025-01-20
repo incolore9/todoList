@@ -1,7 +1,9 @@
+import TodoList from "@/components/common/TodoList";
+
 export default function Home() {
   return (
-    <>
-      <h1>글꼴 테스트</h1>
-    </>
+    <div className="m-auto h-screen max-w-[1200px]">
+      <TodoList />
+    </div>
   );
 }
