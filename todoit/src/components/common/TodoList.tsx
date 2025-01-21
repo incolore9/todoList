@@ -8,13 +8,13 @@ export default function TodoList() {
 
   return (
     <div
-      className={`flex items-center gap-4 rounded-full border-2 border-slate-900 px-3 py-[9px] mb-4 ${isChecked ? "bg-secondary" : null}`}
+      className={`mb-4 flex items-center gap-4 rounded-full border-2 border-slate-900 px-3 py-[9px] ${isChecked ? "bg-secondary" : null}`}
     >
       <input
         type="checkbox"
         id="todoList"
         checked={isChecked}
-        onChange={() => setIsChecked(checked => !checked)}
+        onChange={() => setIsChecked((checked) => !checked)}
         className="absolute appearance-none p-4 focus:rounded-full"
       />
       <label htmlFor="todoList" className="cursor-pointer">
