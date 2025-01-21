@@ -31,6 +31,11 @@ export default {
         },
       },
     },
+    screens: {
+      sm: "375px",
+      md: "744px",
+      lg: "1200px",
+    },
   },
   plugins: [],
 } satisfies Config;
