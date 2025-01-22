@@ -13,3 +13,23 @@ body {
   padding: 0.5rem 1rem;
   box-shadow: 3px 3px 0px 0px rgba(15, 23, 42, 1);
 }
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+}

@@ -1,12 +1,12 @@
 interface Props {
-  bg: string;
+  className: string;
   children: React.ReactNode;
 }
 
-export default function ShadowStyleBtn({ bg, children }: Props) {
+export default function ShadowStyleBtn({ className, children }: Props) {
   return (
     <button
-      className={`shadowDiv flex w-[168px] justify-center rounded-md px-4 py-2 max-md:w-[162px] max-sm:w-14 ${bg}`}
+      className={`shadowDiv flex w-[168px] items-center justify-center gap-1 rounded-md px-4 py-2 font-bold max-md:w-[162px] ${className}`}
     >
       {children}
     </button>

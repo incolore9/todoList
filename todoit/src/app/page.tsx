@@ -11,7 +11,7 @@ export default function Home() {
           placeholder="할 일을 입력해주세요"
           className="shadowDiv w-full flex-1"
         />
-        <ShadowStyleBtn bg={"bg-secondary"}>
+        <ShadowStyleBtn className={"bg-secondary max-sm:w-14"}>
           <div className="flex items-center gap-1">
             <Image
               src="/image/common/plus.svg"
