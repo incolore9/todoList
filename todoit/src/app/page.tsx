@@ -16,8 +16,11 @@ export default function Home() {
       .then((data) => setTodos(data));
   }, []);
 
-  const addTodo = async (formData: string) => {
+  const addTodo = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
     const createTodo = { name: formData.get("todo"), isCompleted: false };
+
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -28,6 +31,23 @@ export default function Home() {
       const addedTodo = await res.json();
       setTodos((previousTodos) => [...previousTodos, addedTodo]);
     }
+
+    event.target.reset();
+  };
+
+  const toggleTodo = async (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
+    );
+    setTodos(updatedTodos);
+
+    await fetch(`${API_URL}/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        isCompleted: !todos.find((t) => t.id === id).isCompleted,
+      }),
+    });
   };
 
   return (
@@ -37,7 +57,7 @@ export default function Home() {
           <div className="flex w-full gap-4">
             <input
               type="text"
-              name="todo"
+              name="name"
               placeholder="할 일을 입력해주세요"
               className="shadowDiv w-full flex-1"
             />
@@ -69,10 +89,13 @@ export default function Home() {
               alt="TODO"
             />
           </div>
-          {todos.map((todo) => (
-            <TodoList key={todo.id} />
-          ))}
+          {todos
+            .filter((todo) => !todo.isCompleted)
+            .map((todo) => (
+              <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
+            ))}
         </div>
+
         <div className="w-full md:w-1/2">
           <div className="mb-4 flex h-9 w-[101px] items-center justify-center rounded-full bg-green-700 px-4 py-2">
             <Image
@@ -82,9 +105,11 @@ export default function Home() {
               alt="DONE"
             />
           </div>
-          {todos.map((todo) => (
-            <TodoList key={todo.id} />
-          ))}
+          {todos
+            .filter((todo) => todo.isCompleted)
+            .map((todo) => (
+              <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
+            ))}
         </div>
       </div>
     </div>
