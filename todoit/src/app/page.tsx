@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import TodoList from "@/components/common/TodoList";
 import Image from "next/image";
 import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
+import { addTodo } from "@/app/utils/todoActions";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items`;
 
@@ -16,28 +17,17 @@ export default function Home() {
       .then((data) => setTodos(data));
   }, []);
 
-  const addTodo = async (event) => {
+  const handleAddTodo = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const createTodo = { name: formData.get("todo"), isCompleted: false };
-
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(createTodo),
-    });
-
-    if (res.ok) {
-      const addedTodo = await res.json();
-      setTodos((previousTodos) => [...previousTodos, addedTodo]);
-    }
-
+    const createTodo = await addTodo(formData);
+    setTodos((previousTodos) => [...previousTodos, createTodo]);
     event.target.reset();
   };
 
   const toggleTodo = async (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
+    const updatedTodos = todos.map((check) =>
+      check.id === id ? { ...check, isCompleted: !check.isCompleted } : check,
     );
     setTodos(updatedTodos);
 
@@ -45,7 +35,7 @@ export default function Home() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        isCompleted: !todos.find((t) => t.id === id).isCompleted,
+        isCompleted: !todos.find((todo) => todo.id === id).isCompleted,
       }),
     });
   };
@@ -53,11 +43,11 @@ export default function Home() {
   return (
     <div className="m-auto h-screen max-w-[1200px] p-4">
       <div className="mb-10 flex w-full gap-[26px] max-md:gap-4 max-sm:mb-6">
-        <form onSubmit={addTodo} className="w-full">
+        <form onSubmit={handleAddTodo} className="w-full">
           <div className="flex w-full gap-4">
             <input
               type="text"
-              name="name"
+              name="todo"
               placeholder="할 일을 입력해주세요"
               className="shadowDiv w-full flex-1"
             />
