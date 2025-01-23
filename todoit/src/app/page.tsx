@@ -16,10 +16,24 @@ export default function Home() {
       .then((data) => setTodos(data));
   }, []);
 
+  const addTodo = async (formData: string) => {
+    const createTodo = { name: formData.get("todo"), isCompleted: false };
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(createTodo),
+    });
+
+    if (res.ok) {
+      const addedTodo = await res.json();
+      setTodos((previousTodos) => [...previousTodos, addedTodo]);
+    }
+  };
+
   return (
     <div className="m-auto h-screen max-w-[1200px] p-4">
       <div className="mb-10 flex w-full gap-[26px] max-md:gap-4 max-sm:mb-6">
-        <form className="w-full">
+        <form onSubmit={addTodo} className="w-full">
           <div className="flex w-full gap-4">
             <input
               type="text"
