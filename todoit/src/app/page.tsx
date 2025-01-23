@@ -1,8 +1,21 @@
+"use client"; // 임시
+import { useState, useEffect } from "react";
+
 import TodoList from "@/components/common/TodoList";
 import Image from "next/image";
 import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
 
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items`;
+
 export default function Home() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setTodos(data));
+  }, []);
+
   return (
     <div className="m-auto h-screen max-w-[1200px] p-4">
       <div className="mb-10 flex w-full gap-[26px] max-md:gap-4 max-sm:mb-6">
@@ -42,8 +55,9 @@ export default function Home() {
               alt="TODO"
             />
           </div>
-          <TodoList />
-          <TodoList />
+          {todos.map((todo) => (
+            <TodoList key={todo.id} />
+          ))}
         </div>
         <div className="w-full md:w-1/2">
           <div className="mb-4 flex h-9 w-[101px] items-center justify-center rounded-full bg-green-700 px-4 py-2">
@@ -54,8 +68,9 @@ export default function Home() {
               alt="DONE"
             />
           </div>
-          <TodoList />
-          <TodoList />
+          {todos.map((todo) => (
+            <TodoList key={todo.id} />
+          ))}
         </div>
       </div>
     </div>
