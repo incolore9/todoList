@@ -5,23 +5,31 @@ import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
 export default function Home() {
   return (
     <div className="m-auto h-screen max-w-[1200px] p-4">
-      <div className="mb-10 flex gap-[26px] max-md:gap-4 max-sm:mb-6">
-        <input
-          type="text"
-          placeholder="할 일을 입력해주세요"
-          className="shadowDiv w-full flex-1"
-        />
-        <ShadowStyleBtn className={"bg-secondary max-sm:w-14"}>
-          <div className="flex items-center gap-1">
-            <Image
-              src="/image/common/plus.svg"
-              width={16}
-              height={16}
-              alt="추가하기 버튼"
+      <div className="mb-10 flex w-full gap-[26px] max-md:gap-4 max-sm:mb-6">
+        <form className="w-full">
+          <div className="flex w-full gap-4">
+            <input
+              type="text"
+              name="todo"
+              placeholder="할 일을 입력해주세요"
+              className="shadowDiv w-full flex-1"
             />
-            <h2 className="max-sm:hidden">추가하기</h2>
+            <ShadowStyleBtn
+              type="submit"
+              className={"bg-secondary max-sm:w-14"}
+            >
+              <div className="flex items-center gap-1">
+                <Image
+                  src="/image/common/plus.svg"
+                  width={16}
+                  height={16}
+                  alt="추가하기 버튼"
+                />
+                <h2 className="max-sm:hidden">추가하기</h2>
+              </div>
+            </ShadowStyleBtn>
           </div>
-        </ShadowStyleBtn>
+        </form>
       </div>
 
       <div className="flex flex-col gap-6 md:flex-row">
