@@ -43,7 +43,7 @@ export default function EditButton({
       onClick={handleEdit}
       disabled={!isEditing}
       className={`shadowDiv flex w-[168px] items-center justify-center gap-1 rounded-md px-4 py-2 font-bold max-md:w-[162px] ${
-        isEditing ? "bg-complete text-white" : "bg-slate-200 text-slate-900"
+        isEditing ? "bg-complete" : "bg-slate-200 text-slate-900"
       }`}
     >
       <Image
@@ -52,7 +52,7 @@ export default function EditButton({
         height={16}
         alt="수정 아이콘"
       />
-      수정하기
+      수정 완료
     </button>
   );
 }

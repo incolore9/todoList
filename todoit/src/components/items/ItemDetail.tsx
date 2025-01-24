@@ -21,15 +21,23 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
   const [memo, setMemo] = useState(todo.memo || "");
   const [isEditing, setIsEditing] = useState(false);
 
+  const changed = () => {
+    const originalMemo = todo.memo || "";
+    const isNameChanged = name !== todo.name;
+    const isMemoChanged = memo !== originalMemo;
+
+    return isNameChanged || isMemoChanged;
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setIsEditing(true);
     if (e.target.type === "text") {
       setName(e.target.value);
     } else {
       setMemo(e.target.value);
     }
+    setIsEditing(changed());
   };
 
   return (
@@ -83,7 +91,7 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
       </div>
 
       <div className="flex justify-end gap-3 max-sm:w-full md:gap-4">
-        <EditButton id={id} name={name} memo={memo} isEditing={isEditing} />
+        <EditButton id={id} name={name} memo={memo} isEditing={changed()} />
         <DeleteButton id={id} />
       </div>
     </div>
