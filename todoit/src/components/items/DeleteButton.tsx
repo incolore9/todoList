@@ -6,13 +6,16 @@ export default function DeleteButton({ id }: { id: string }) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    const res = await fetch(`/api/item/${id}/delete`, { method: "DELETE" });
+    const res = await fetch(`/api/items/${id}`, {
+      method: "DELETE",
+    });
 
     if (res.ok) {
-      alert("삭제되었습니다.");
+      alert("삭제 완료하였습니다.");
       router.push("/");
+      router.refresh();
     } else {
-      alert("삭제 실패");
+      alert("삭제에 실패했습니다.");
     }
   };
 
