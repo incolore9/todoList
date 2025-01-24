@@ -1,12 +1,12 @@
 import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
 import Image from "next/image";
 
-export default function DetailPage() {
+export default function Items(props) {
   return (
     <div className="m-auto h-screen max-w-[1200px] bg-white px-4 py-4 max-md:p-6 max-sm:p-4 md:px-[102px] md:py-[27px]">
       <input
         type="text"
-        defaultValue="샘플텍스트"
+        defaultValue={props}
         className="text-bl mb-4 h-16 w-full flex-1 rounded-3xl border-2 border-slate-900 text-center text-xl font-bold underline max-md:mb-5"
       />
 

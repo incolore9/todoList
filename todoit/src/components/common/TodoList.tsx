@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TodoList({ todo, toggleTodo }) {
   return (
@@ -30,7 +31,7 @@ export default function TodoList({ todo, toggleTodo }) {
         </div>
       </label>
       <p className={`text-slate-800 ${todo.isCompleted ? "line-through" : ""}`}>
-        {todo.name}
+        <Link href={`/items/${todo.id}`}>{todo.name}</Link>
       </p>
     </div>
   );
