@@ -1,12 +1,23 @@
-import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
 import Image from "next/image";
 
-export default function Items(props) {
+import DeleteButton from "@/components/items/DeleteButton";
+import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
+
+const BASE_API_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items`;
+
+async function getTodo(id: string) {
+  const res = await fetch(`${BASE_API_URL}/${id}`);
+  return res.json();
+}
+
+export default async function Items({ params }: { params: { id: string } }) {
+  const todo = await getTodo(params.id);
+
   return (
     <div className="m-auto h-screen max-w-[1200px] bg-white px-4 py-4 max-md:p-6 max-sm:p-4 md:px-[102px] md:py-[27px]">
       <input
         type="text"
-        defaultValue={props}
+        defaultValue={todo.name}
         className="text-bl mb-4 h-16 w-full flex-1 rounded-3xl border-2 border-slate-900 text-center text-xl font-bold underline max-md:mb-5"
       />
 
@@ -61,15 +72,7 @@ export default function Items(props) {
           수정하기
         </ShadowStyleBtn>
 
-        <ShadowStyleBtn className="bg-delete text-white max-sm:flex-grow">
-          <Image
-            src="/image/icon/x.svg"
-            width={16}
-            height={16}
-            alt="삭제 아이콘"
-          />
-          삭제하기
-        </ShadowStyleBtn>
+        <DeleteButton />
       </div>
     </div>
   );
