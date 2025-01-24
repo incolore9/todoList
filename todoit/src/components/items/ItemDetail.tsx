@@ -22,6 +22,9 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
   const [memo, setMemo] = useState(todo.memo || "");
   const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
   const [isEditing, setIsEditing] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    todo.imageUrl || null,
+  );
 
   const changed = () => {
     const originalMemo = todo.memo || "";
@@ -43,6 +46,17 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
       setMemo(e.target.value);
     }
     setIsEditing(changed());
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -82,29 +96,38 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
 
       <div className="mb-6 flex flex-col gap-4 max-sm:mb-4 md:flex-row">
         <div className="relative flex h-[311px] w-2/5 items-center justify-center rounded-3xl border-2 border-dashed border-gray-300 bg-gray-50 max-md:w-full">
-          <div className="flex flex-col items-center gap-2">
+          {imagePreview ? (
             <Image
-              src="/image/detail/photo-icon.svg"
-              width={64}
-              height={64}
-              alt="이미지 첨부하기"
+              src={imagePreview}
+              alt="업로드된 이미지"
+              fill
+              className="rounded-3xl object-cover"
             />
-          </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <Image
+                src="/image/detail/photo-icon.svg"
+                width={64}
+                height={64}
+                alt="이미지 첨부"
+              />
+            </div>
+          )}
 
-          <button className="absolute bottom-4 right-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 shadow-md hover:bg-slate-300">
+          <label className="absolute bottom-4 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-slate-200">
+            <input
+              type="file"
+              className="hidden"
+              accept="image/png, image/jpeg"
+              onChange={handleImageUpload}
+            />
             <Image
               src="/image/icon/plus.svg"
               width={24}
               height={24}
               alt="더하기 모양 아이콘"
             />
-          </button>
-
-          <input
-            type="file"
-            className="absolute cursor-pointer opacity-0"
-            accept="image/png, image/jpeg"
-          />
+          </label>
         </div>
 
         <div className="flex w-3/5 flex-col gap-2 max-md:w-full">
