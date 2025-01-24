@@ -70,9 +70,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-6 md:flex-row">
-        <div
-          className={`w-full md:w-1/2 ${todos.filter((todo) => !todo.isCompleted).length === 0 ? "bg-yellow-500" : ""}`}
-        >
+        <div className="w-full md:w-1/2">
           <div className="mb-4 flex h-9 w-[101px] items-center justify-center rounded-full bg-lime-300 px-4 py-2">
             <Image
               src="/image/common/TODO-logo.svg"
@@ -81,16 +79,30 @@ export default function Home() {
               alt="TODO"
             />
           </div>
-          {todos
-            .filter((todo) => !todo.isCompleted)
-            .map((todo) => (
-              <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
-            ))}
+          {todos.filter((todo) => !todo.isCompleted).length === 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                src="/image/home/Type=Todo, Size=Large.svg"
+                width={200}
+                height={200}
+                alt="할 일이 없음"
+              />
+              <p className="mt-4 text-center text-slate-400">
+                할 일이 없어요.
+                <br />
+                TODO를 새롭게 추가해주세요!
+              </p>
+            </div>
+          ) : (
+            todos
+              .filter((todo) => !todo.isCompleted)
+              .map((todo) => (
+                <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
+              ))
+          )}
         </div>
 
-        <div
-          className={`w-full md:w-1/2 ${todos.filter((todo) => todo.isCompleted).length === 0 ? "bg-red-500" : ""}`}
-        >
+        <div className="w-full md:w-1/2">
           <div className="mb-4 flex h-9 w-[101px] items-center justify-center rounded-full bg-green-700 px-4 py-2">
             <Image
               src="/image/common/DONE-logo.svg"
@@ -99,11 +111,27 @@ export default function Home() {
               alt="DONE"
             />
           </div>
-          {todos
-            .filter((todo) => todo.isCompleted)
-            .map((todo) => (
-              <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
-            ))}
+          {todos.filter((todo) => todo.isCompleted).length === 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                src="/image/home/Type=Done, Size=Large.svg"
+                width={200}
+                height={200}
+                alt="완료된 일이 없음"
+              />
+              <p className="mt-4 text-center text-slate-400">
+                아직 다 한 일이 없어요.
+                <br />
+                해야 할 일을 체크해보세요!
+              </p>
+            </div>
+          ) : (
+            todos
+              .filter((todo) => todo.isCompleted)
+              .map((todo) => (
+                <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
+              ))
+          )}
         </div>
       </div>
     </div>
