@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import DeleteButton from "@/components/items/DeleteButton";
-import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
+import EditButton from "@/components/items/EditButton";
 
 const BASE_API_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items`;
 
@@ -62,17 +62,8 @@ export default async function Items({ params }: { params: { id: string } }) {
       </div>
 
       <div className="flex justify-end gap-3 max-sm:w-full md:gap-4">
-        <ShadowStyleBtn className="bg-slate-200 text-slate-900 max-sm:flex-grow">
-          <Image
-            src="/image/icon/check.svg"
-            width={16}
-            height={16}
-            alt="수정 아이콘"
-          />
-          수정하기
-        </ShadowStyleBtn>
-
-        <DeleteButton />
+        <EditButton />
+        <DeleteButton id={params.id} />
       </div>
     </div>
   );
