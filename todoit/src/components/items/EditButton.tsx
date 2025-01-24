@@ -7,6 +7,7 @@ interface EditButtonProps {
   id: string;
   name: string;
   memo: string;
+  isCompleted: boolean;
   isEditing: boolean;
 }
 
@@ -14,6 +15,7 @@ export default function EditButton({
   id,
   name,
   memo,
+  isCompleted,
   isEditing,
 }: EditButtonProps) {
   const router = useRouter();
@@ -27,6 +29,7 @@ export default function EditButton({
       body: JSON.stringify({
         name,
         memo,
+        isCompleted,
       }),
     });
 

@@ -9,6 +9,7 @@ interface Todo {
   name: string;
   memo: string | null;
   imageUrl?: string;
+  isCompleted: boolean;
 }
 
 interface ItemDetailProps {
@@ -19,20 +20,24 @@ interface ItemDetailProps {
 export default function ItemDetail({ todo, id }: ItemDetailProps) {
   const [name, setName] = useState(todo.name || "");
   const [memo, setMemo] = useState(todo.memo || "");
+  const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
   const [isEditing, setIsEditing] = useState(false);
 
   const changed = () => {
     const originalMemo = todo.memo || "";
     const isNameChanged = name !== todo.name;
     const isMemoChanged = memo !== originalMemo;
+    const isCompletedChanged = isCompleted !== todo.isCompleted;
 
-    return isNameChanged || isMemoChanged;
+    return isNameChanged || isMemoChanged || isCompletedChanged;
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    if (e.target.type === "text") {
+    if (e.target.type === "checkbox") {
+      setIsCompleted(e.target.checked);
+    } else if (e.target.type === "text") {
       setName(e.target.value);
     } else {
       setMemo(e.target.value);
@@ -42,12 +47,38 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
 
   return (
     <div className="m-auto h-screen max-w-[1200px] bg-white px-4 py-4 max-md:p-6 max-sm:p-4 md:px-[102px] md:py-[27px]">
-      <input
-        type="text"
-        value={name}
-        onChange={handleInputChange}
-        className="text-bl mb-4 h-16 w-full flex-1 rounded-3xl border-2 border-slate-900 text-center text-xl font-bold underline max-md:mb-5"
-      />
+      <div
+        className={`mb-4 flex items-center justify-center rounded-full border-2 border-slate-900 px-3 py-[9px] ${isCompleted ? "bg-secondary" : ""}`}
+      >
+        <input
+          type="checkbox"
+          id={id}
+          checked={isCompleted}
+          onChange={handleInputChange}
+          className="appearance-none p-4 focus:rounded-full"
+        />
+        <label htmlFor={id} className="cursor-pointer">
+          <div
+            className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-900 ${
+              isCompleted ? "border-primary bg-primary" : "bg-yellow-50"
+            } peer-focus-visible:ring-2 peer-focus-visible:ring-slate-900 peer-focus-visible:ring-offset-2`}
+          >
+            <Image
+              src="/image/icon/check-white.svg"
+              alt="체크 아이콘"
+              width={20}
+              height={20}
+              className={`${isCompleted ? "block" : "hidden"}`}
+            />
+          </div>
+        </label>
+        <input
+          type="text"
+          value={name}
+          onChange={handleInputChange}
+          className="flex-1 bg-transparent text-center text-xl font-bold focus:outline-none"
+        />
+      </div>
 
       <div className="mb-6 flex flex-col gap-4 max-sm:mb-4 md:flex-row">
         <div className="relative flex h-[311px] w-2/5 items-center justify-center rounded-3xl border-2 border-dashed border-gray-300 bg-gray-50 max-md:w-full">
@@ -91,7 +122,13 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
       </div>
 
       <div className="flex justify-end gap-3 max-sm:w-full md:gap-4">
-        <EditButton id={id} name={name} memo={memo} isEditing={changed()} />
+        <EditButton
+          id={id}
+          name={name}
+          memo={memo}
+          isCompleted={isCompleted}
+          isEditing={changed()}
+        />
         <DeleteButton id={id} />
       </div>
     </div>
