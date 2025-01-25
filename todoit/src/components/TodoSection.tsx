@@ -1,7 +1,12 @@
+import { TodoSectionProps } from "@/types/todo";
 import TodoList from "@/components/common/TodoList";
 import Image from "next/image";
 
-export default function TodoSection({ todos, toggleTodo, isCompleted }) {
+export default function TodoSection({
+  todos,
+  toggleTodo,
+  isCompleted,
+}: TodoSectionProps) {
   const filteredTodos = todos.filter(
     (todo) => todo.isCompleted === isCompleted,
   );
