@@ -25,11 +25,12 @@ export default function TodoSection({
         <div className="flex flex-col items-center justify-center">
           <Image
             src={`/image/home/Type=${isCompleted ? "Done" : "Todo"}-Large.svg`}
-            width={200}
-            height={200}
+            width={isCompleted ? 220 : 200}
+            height={isCompleted ? 220 : 200}
+            className="max-sm:w-[120px] max-sm:h-[120px]"
             alt={isCompleted ? "완료된 일이 없음" : "할 일이 없음"}
           />
-          <p className="mt-4 text-center text-slate-400">
+          <p className="mt-4 text-center text-slate-400 whitespace-pre-line">
             {isCompleted
               ? "아직 다 한 일이 없어요.\n해야 할 일을 체크해보세요!"
               : "할 일이 없어요.\nTODO를 새롭게 추가해주세요!"}
