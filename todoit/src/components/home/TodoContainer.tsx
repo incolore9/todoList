@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { addTodo } from "@/app/utils/todoActions";
-import TodoForm from "@/components/TodoForm";
-import TodoSection from "@/components/TodoSection";
+import TodoForm from "@/components/home/TodoForm";
+import TodoSection from "@/components/home/TodoSection";
 import { Todo } from "@/types/TodoTypes";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items`;
