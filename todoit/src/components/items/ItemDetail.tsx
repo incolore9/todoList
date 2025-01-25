@@ -11,20 +11,24 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
   const [memo, setMemo] = useState(todo.memo || "");
   const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
   const [imagePreview, setImagePreview] = useState<string | null>(
-    todo.imageUrl || null,
+    todo.imageUrl || null
   );
 
   const changed = () => {
     const originalMemo = todo.memo || "";
+    const originalImageUrl = todo.imageUrl || null;
     const isNameChanged = name !== todo.name;
     const isMemoChanged = memo !== originalMemo;
     const isCompletedChanged = isCompleted !== todo.isCompleted;
+    const isImageChanged = imagePreview !== originalImageUrl;
 
-    return isNameChanged || isMemoChanged || isCompletedChanged;
+    return (
+      isNameChanged || isMemoChanged || isCompletedChanged || isImageChanged
+    );
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const target = e.target as HTMLInputElement;
     if (target.type === "checkbox") {
@@ -36,7 +40,7 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -54,11 +58,45 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      // 이미지 업로드
+      const uploadResponse = await fetch("/api/images/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error("이미지 업로드에 실패했습니다.");
+      }
+
+      const imageData = await uploadResponse.json();
+      setImagePreview(imageData.url);
+
+      // 아이템 업데이트
+      const updateResponse = await fetch(`/api/items/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          memo,
+          isCompleted,
+          imageUrl: imageData.url,
+        }),
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error("이미지 URL 저장에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("이미지 업로드 에러:", error);
+      alert("이미지 업로드에 실패했습니다.");
+      e.target.value = "";
+    }
   };
 
   return (

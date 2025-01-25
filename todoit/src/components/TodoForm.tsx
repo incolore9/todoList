@@ -29,7 +29,7 @@ export default function TodoForm({ onAddTodo }: TodoFormProps) {
           placeholder="할 일을 입력해주세요"
           className="shadowDiv w-full flex-1"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={e => setInputValue(e.target.value)}
         />
         <CreateTodoButton
           type="submit"
