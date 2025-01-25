@@ -1,9 +1,6 @@
 "use client"; // 임시
 import { useState, useEffect } from "react";
 
-import TodoList from "@/components/common/TodoList";
-import Image from "next/image";
-import ShadowStyleBtn from "@/components/common/ShadowStyleBtn";
 import { addTodo } from "@/app/utils/todoActions";
 import TodoForm from "@/components/TodoForm";
 import TodoSection from "@/components/TodoSection";
