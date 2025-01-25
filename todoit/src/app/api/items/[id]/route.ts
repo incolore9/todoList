@@ -17,7 +17,7 @@ export async function DELETE(
     return NextResponse.json({ message: "삭제되었습니다." }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "에러가 발생했습니다." },
+      { message: `${error} 에러가 발생했습니다.` },
       { status: 500 },
     );
   }
@@ -48,7 +48,7 @@ export async function PATCH(
     return NextResponse.json({ message: "수정되었습니다." }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "에러가 발생했습니다." },
+      { message: `${error} 에러가 발생했습니다.` },
       { status: 500 },
     );
   }
