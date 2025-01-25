@@ -7,9 +7,7 @@ export default function TodoSection({
   toggleTodo,
   isCompleted,
 }: TodoSectionProps) {
-  const filteredTodos = todos.filter(
-    (todo) => todo.isCompleted === isCompleted,
-  );
+  const filteredTodos = todos.filter(todo => todo.isCompleted === isCompleted);
 
   return (
     <div className="w-full md:w-1/2">
@@ -26,7 +24,7 @@ export default function TodoSection({
       {filteredTodos.length === 0 ? (
         <div className="flex flex-col items-center justify-center">
           <Image
-            src={`/image/home/Type=${isCompleted ? "Done" : "Todo"}, Size=Large.svg`}
+            src={`/image/home/Type=${isCompleted ? "Done" : "Todo"}-Large.svg`}
             width={200}
             height={200}
             alt={isCompleted ? "완료된 일이 없음" : "할 일이 없음"}
@@ -38,7 +36,7 @@ export default function TodoSection({
           </p>
         </div>
       ) : (
-        filteredTodos.map((todo) => (
+        filteredTodos.map(todo => (
           <TodoList key={todo.id} todo={todo} toggleTodo={toggleTodo} />
         ))
       )}
