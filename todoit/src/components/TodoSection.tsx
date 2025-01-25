@@ -14,7 +14,7 @@ export default function TodoSection({
   return (
     <div className="w-full md:w-1/2">
       <div
-        className={`mb-4 flex h-9 w-[101px] items-center justify-center rounded-full ${isCompleted ? "bg-green-700" : "bg-lime-300"} px-4 py-2`}
+        className={`mb-4 flex h-9 w-[101px] items-center justify-center rounded-full ${isCompleted ? "bg-green-700" : "bg-complete"} px-4 py-2`}
       >
         <Image
           src={`/image/common/${isCompleted ? "DONE" : "TODO"}-logo.svg`}
