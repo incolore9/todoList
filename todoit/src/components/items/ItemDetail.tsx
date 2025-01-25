@@ -4,24 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
-
-interface Todo {
-  name: string;
-  memo: string | null;
-  imageUrl?: string;
-  isCompleted: boolean;
-}
-
-interface ItemDetailProps {
-  todo: Todo;
-  id: string;
-}
+import { ItemDetailProps } from "@/types/TodoTypes";
 
 export default function ItemDetail({ todo, id }: ItemDetailProps) {
   const [name, setName] = useState(todo.name || "");
   const [memo, setMemo] = useState(todo.memo || "");
   const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
-  const [isEditing, setIsEditing] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(
     todo.imageUrl || null,
   );
@@ -38,14 +26,14 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    if (e.target.type === "checkbox") {
-      setIsCompleted(e.target.checked);
-    } else if (e.target.type === "text") {
-      setName(e.target.value);
+    const target = e.target as HTMLInputElement;
+    if (target.type === "checkbox") {
+      setIsCompleted(target.checked);
+    } else if (target.type === "text") {
+      setName(target.value);
     } else {
-      setMemo(e.target.value);
+      setMemo(target.value);
     }
-    setIsEditing(changed());
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

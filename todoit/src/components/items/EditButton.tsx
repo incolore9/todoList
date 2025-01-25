@@ -2,14 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-interface EditButtonProps {
-  id: string;
-  name: string;
-  memo: string;
-  isCompleted: boolean;
-  isEditing: boolean;
-}
+import { EditButtonProps } from "../../types/EditButtonProps";
 
 export default function EditButton({
   id,

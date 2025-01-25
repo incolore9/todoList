@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { TodoListProps } from "../../types/TodoListProps";
 
-export default function TodoList({ todo, toggleTodo }) {
+export default function TodoList({ todo, toggleTodo }: TodoListProps) {
   return (
     <div
       className={`mb-4 flex items-center gap-4 rounded-full border-2 border-slate-900 px-3 py-[9px] ${todo.isCompleted ? "bg-secondary" : ""}`}
