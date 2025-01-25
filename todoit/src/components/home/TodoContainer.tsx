@@ -4,27 +4,31 @@ import { useState } from "react";
 import { addTodo } from "@/app/utils/todoActions";
 import TodoForm from "@/components/TodoForm";
 import TodoSection from "@/components/TodoSection";
+import { Todo } from "@/types/TodoTypes";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items`;
 
-export default function HomeClient({ initialTodos }: { initialTodos: any[] }) {
-  const [todos, setTodos] = useState(initialTodos || []);
+export default function HomeClient({ initialTodos }: { initialTodos: Todo[] }) {
+  const [todos, setTodos] = useState<Todo[]>(initialTodos || []);
 
   const handleAddTodo = async (formData: FormData) => {
     const createTodo = await addTodo(formData);
-    setTodos((previousTodos) => [...previousTodos, createTodo]);
+    setTodos(previousTodos => [...previousTodos, createTodo]);
   };
 
-  const toggleTodo = async (id: number) => {
-    const updatedTodos = todos.map((item) =>
-      item.id === id ? { ...item, isCompleted: !item.isCompleted } : item,
+  const toggleTodo = async (id: string) => {
+    const updatedTodos = todos.map(item =>
+      item.id === id ? { ...item, isCompleted: !item.isCompleted } : item
     );
     setTodos(updatedTodos);
 
     await fetch(`${API_URL}/${id}`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        isCompleted: !todos.find((todo) => todo.id === id)?.isCompleted,
+        isCompleted: !todos.find(todo => todo.id === id)?.isCompleted,
       }),
     });
   };
