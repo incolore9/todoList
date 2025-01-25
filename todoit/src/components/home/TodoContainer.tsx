@@ -36,14 +36,17 @@ export default function HomeClient({ initialTodos }: { initialTodos: Todo[] }) {
   return (
     <div className="m-auto h-screen max-w-[1200px] p-4">
       <div className="mb-10 flex w-full gap-[26px] max-md:gap-4 max-sm:mb-6">
+        {/* Todo를 추가하는 폼 및 버튼 섹션입니다. */}
         <TodoForm onAddTodo={handleAddTodo} />
       </div>
       <div className="flex flex-col gap-6 md:flex-row">
+        {/* Todo: 해야할 일 목록입니다. */}
         <TodoSection
           todos={todos}
           toggleTodo={toggleTodo}
           isCompleted={false}
         />
+        {/* Done: 체크된 완료된 목록입니다. */}
         <TodoSection todos={todos} toggleTodo={toggleTodo} isCompleted={true} />
       </div>
     </div>

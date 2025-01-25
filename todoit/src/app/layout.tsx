@@ -32,9 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body
-        className={`${nanumSquare.className} ${nanumSquare.variable} min-h-[calc(100vh-60px)]`} //스크린 높이 - 헤더 높이
-      >
+      <body className={`${nanumSquare.className} ${nanumSquare.variable}`}>
         <Header />
         {children}
       </body>

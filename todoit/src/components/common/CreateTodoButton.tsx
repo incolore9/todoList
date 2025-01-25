@@ -12,6 +12,7 @@ const CreateTodoButton: React.FC<CreateTodoButtonProps> = ({
   ...props
 }) => {
   return (
+    // Todo를 추가하기 위한 버튼 컴포넌트로, 활성화/비활성화 상태에 따라 스타일이 변경됩니다.ㅣ
     <button
       className={`shadowDiv ${disabled ? "bg-slate-200 text-slate-900" : "bg-primary text-white"}`}
       disabled={disabled}

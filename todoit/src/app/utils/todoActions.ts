@@ -2,9 +2,11 @@
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}`;
 
+// 새로운 할 일을 추가하는 서버 액션
 export async function addTodo(formData: FormData) {
   const todoInput = formData.get("todo")?.toString();
   if (!todoInput?.trim()) return;
+
   try {
     const response = await fetch(`${BASE_URL}/items`, {
       method: "POST",

@@ -22,6 +22,7 @@ export default function ImageUpload({
           : undefined
       }
     >
+      {/* 이미지가 없을 때만 기본 아이콘 표시 */}
       {!imagePreview && (
         <div className="flex flex-col items-center gap-2">
           <Image
@@ -40,6 +41,7 @@ export default function ImageUpload({
             : "bg-slate-200"
         }`}
       >
+        {/* 실제 파일 입력은 숨기고 커스텀 UI 사용 */}
         <input
           type="file"
           className="hidden"
@@ -47,14 +49,17 @@ export default function ImageUpload({
           onChange={e => {
             const file = e.target.files?.[0];
             if (file) {
+              // FileReader를 사용하여 선택된 이미지를 Base64 문자열로 변환
               const reader = new FileReader();
               reader.onloadend = () => {
+                // 변환된 이미지 데이터를 상태로 저장
                 setImagePreview(reader.result as string);
               };
               reader.readAsDataURL(file);
             }
           }}
         />
+        {/* 이미지 존재 여부에 따라 다른 아이콘 표시 */}
         <Image
           src={imagePreview ? "/image/icon/edit.svg" : "/image/icon/plus.svg"}
           width={24}

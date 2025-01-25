@@ -23,6 +23,7 @@ export default function TodoForm({ onAddTodo }: TodoFormProps) {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div className="flex w-full gap-4">
+        {/* Todo를 입력하는 텍스트 영역입니다. */}
         <input
           type="text"
           name="todo"
@@ -31,6 +32,7 @@ export default function TodoForm({ onAddTodo }: TodoFormProps) {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
         />
+        {/* 텍스트 입력후 이 버튼을 눌러 추가합니다. 빈칸이거나 등록 중에는 비활성화 됩니다. */}
         <CreateTodoButton
           type="submit"
           disabled={!inputValue.trim() || isSubmitting}
