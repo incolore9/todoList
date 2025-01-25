@@ -43,7 +43,7 @@ export default function TitleSection({
         type="text"
         value={name}
         onChange={onInputChange}
-        className="flex-1 bg-transparent text-center text-xl font-bold focus:outline-none"
+        className="flex-1 bg-transparent text-center text-xl font-bold underline focus:outline-none"
       />
     </div>
   );

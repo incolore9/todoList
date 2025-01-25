@@ -1,7 +1,7 @@
 "use client";
 
 import { ItemDetailProps } from "@/types/TodoTypes";
-import { useItemDetail } from "./useItemDetail";
+import { useItemDetail } from "@/app/hooks/useItemDetail";
 import TitleSection from "./TitleSection";
 import ImageUpload from "./ImageUpload";
 import MemoSection from "./MemoSection";

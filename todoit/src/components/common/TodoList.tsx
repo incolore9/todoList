@@ -16,11 +16,11 @@ export default function TodoList({ todo, toggleTodo }: TodoListProps) {
         id={String(todo.id)}
         checked={todo.isCompleted}
         onChange={() => toggleTodo(todo.id)}
-        className="absolute appearance-none p-4 focus:rounded-full"
+        className="absolute appearance-none p-4 focus:rounded-full cursor-pointer"
       />
-      <label htmlFor={String(todo.id)} className="cursor-pointer">
+      <label htmlFor={String(todo.id)}>
         <div
-          className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-900 ${
+          className={`cursor-pointer flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-900 ${
             todo.isCompleted ? "border-primary bg-primary" : "bg-yellow-50"
           }`}
         >
