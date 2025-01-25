@@ -33,8 +33,10 @@ export default function EditButton({
       }),
     });
 
+    //수정을 완료하면 홈으로 보냅니다
     if (res.ok) {
       alert("수정이 완료되었습니다.");
+      router.push("/");
       router.refresh();
     } else {
       alert("수정에 실패했습니다.");

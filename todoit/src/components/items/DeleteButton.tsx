@@ -10,6 +10,7 @@ export default function DeleteButton({ id }: { id: string }) {
       method: "DELETE",
     });
 
+    //수정을 완료하면 홈으로 보냅니다
     if (res.ok) {
       alert("삭제 완료하였습니다.");
       router.push("/");
