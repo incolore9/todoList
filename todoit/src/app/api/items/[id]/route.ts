@@ -1,11 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(request: Request, context: any) {
+export async function DELETE(request: NextRequest) {
   try {
-    const params = await context.params;
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "ID가 필요합니다." },
+        { status: 400 }
+      );
+    }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items/${params.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items/${id}`,
       { method: "DELETE" }
     );
 
@@ -22,13 +30,22 @@ export async function DELETE(request: Request, context: any) {
   }
 }
 
-export async function PATCH(request: Request, context: any) {
+export async function PATCH(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "ID가 필요합니다." },
+        { status: 400 }
+      );
+    }
+
     const body = await request.json();
-    const params = await context.params;
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items/${params.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items/${id}`,
       {
         method: "PATCH",
         headers: {

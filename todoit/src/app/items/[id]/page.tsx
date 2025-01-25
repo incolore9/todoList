@@ -10,7 +10,11 @@ async function getTodo(id: string) {
   return res.json();
 }
 
-export default async function Items({ params }: { params: { id: string } }) {
+export default async function Items({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const resolvedParams = await params;
   const todo = await getTodo(resolvedParams.id);
   return <ItemDetail todo={todo} id={resolvedParams.id} />;
