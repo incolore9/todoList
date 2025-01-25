@@ -50,13 +50,27 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size >= maxSize) {
+      alert("5MB이하의 png, jpeg 파일만 첨부 가능합니다.");
+      e.target.value = "";
+      return;
     }
+
+    const englishOnly = /^[A-Za-z._-]+$/;
+    if (!englishOnly.test(file.name)) {
+      alert("파일 이름은 영문과 ._-만 허용됩니다.");
+      e.target.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -95,15 +109,23 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
       </div>
 
       <div className="mb-6 flex flex-col gap-4 max-sm:mb-4 md:flex-row">
-        <div className="relative flex h-[311px] w-2/5 items-center justify-center rounded-3xl border-2 border-dashed border-gray-300 bg-gray-50 max-md:w-full">
-          {imagePreview ? (
-            <Image
-              src={imagePreview}
-              alt="업로드된 이미지"
-              fill
-              className="rounded-3xl object-cover"
-            />
-          ) : (
+        <div
+          className={`relative flex h-[311px] w-2/5 items-center justify-center rounded-3xl ${
+            imagePreview
+              ? "border-none"
+              : "border-2 border-dashed border-gray-300 bg-gray-50"
+          } max-md:w-full`}
+          style={
+            imagePreview
+              ? {
+                  backgroundImage: `url(${imagePreview})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        >
+          {!imagePreview && (
             <div className="flex flex-col items-center gap-2">
               <Image
                 src="/image/detail/photo-icon.svg"
@@ -114,7 +136,13 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
             </div>
           )}
 
-          <label className="absolute bottom-4 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-slate-200">
+          <label
+            className={`absolute bottom-4 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full ${
+              imagePreview
+                ? "border-2 border-slate-900 bg-[#0F172A]/50"
+                : "bg-slate-200"
+            }`}
+          >
             <input
               type="file"
               className="hidden"
@@ -122,10 +150,12 @@ export default function ItemDetail({ todo, id }: ItemDetailProps) {
               onChange={handleImageUpload}
             />
             <Image
-              src="/image/icon/plus.svg"
+              src={
+                imagePreview ? "/image/icon/edit.svg" : "/image/icon/plus.svg"
+              }
               width={24}
               height={24}
-              alt="더하기 모양 아이콘"
+              alt={imagePreview ? "이미지 수정" : "이미지 추가"}
             />
           </label>
         </div>
