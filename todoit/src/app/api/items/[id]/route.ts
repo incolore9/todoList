@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
+export async function DELETE(request: Request, context: any) {
   try {
+    const params = await context.params;
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items/${params.id}`,
-      { method: "DELETE" },
+      { method: "DELETE" }
     );
 
     if (!res.ok) {
@@ -18,17 +17,15 @@ export async function DELETE(
   } catch (error) {
     return NextResponse.json(
       { message: `${error} 에러가 발생했습니다.` },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
+export async function PATCH(request: Request, context: any) {
   try {
     const body = await request.json();
+    const params = await context.params;
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_TENANT_ID}/items/${params.id}`,
@@ -38,7 +35,7 @@ export async function PATCH(
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      },
+      }
     );
 
     if (!res.ok) {
@@ -49,7 +46,7 @@ export async function PATCH(
   } catch (error) {
     return NextResponse.json(
       { message: `${error} 에러가 발생했습니다.` },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
